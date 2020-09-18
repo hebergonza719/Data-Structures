@@ -13,16 +13,55 @@ return elements in First In First Out order.
 Stretch: What if you could only use instances of your Stack class to implement the Queue?
          What would that look like? How many Stacks would you need? Try it!
 """
+
+
+# class Queue:
+#     def __init__(self):
+#         self.size = 0
+#         self.array = []
+#
+#     def __len__(self):
+#         return self.size
+#
+#     def enqueue(self, value):
+#         self.array.insert(0, value)
+#         self.size = self.size + 1
+#
+#     def dequeue(self):
+#         ret_val = None
+#
+#         if self.size > 0:
+#             ret_val = self.array[self.size - 1]
+#             self.array.pop()
+#             self.size = self.size - 1
+#
+#         return ret_val
+
+import sys
+sys.path.insert(1, '../singly_linked_list/')
+
+from singly_linked_list import LinkedList, Node
+
+
 class Queue:
     def __init__(self):
         self.size = 0
-        # self.storage = ?
-    
+        self.storage = LinkedList()
+
     def __len__(self):
-        pass
+        return self.size
 
     def enqueue(self, value):
-        pass
+        self.size += 1
+        return self.storage.add_to_tail(value)
 
     def dequeue(self):
-        pass
+        if self.size == 0:
+            return
+        self.size = self.size - 1
+        return self.storage.remove_head()
+
+# I believe it is easier to implement queues with arrays because it is easier to wrap my head
+# around it. You add at the enqueue by adding at the beginning and you dequeue by removing the
+# last element in the array. With LL, you implement in the opposite manner. You enqueue by adding a node
+# at the tail and you dequeue by removing the head.
