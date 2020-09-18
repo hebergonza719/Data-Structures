@@ -25,8 +25,8 @@ class LinkedList:
             self.head = new_node
             self.tail = new_node
         else:
-            new_node.set_next_node(new_node)
-            self.head = new_node
+            new_node.set_next_node(self.head)
+            self.head = new_node 
 
     def add_to_tail(self, value):
         new_node = Node(value)
@@ -57,15 +57,20 @@ class LinkedList:
         if self.head is None:
             return None
         # list with 1 element?
+        
+        ret_value = self.tail.get_value()
+        if self.head == self.tail:
+            self.head = None
+            self.tail = None
+        # list with +2 elements?
         else:
-            ret_value = self.tail.get_value()
-            if self.head == self.tail:
-                self.head = None
-                self.tail = None
-            # list with +2 elements?
-            else:
-                self.tail = self.head
-            return ret_value
+            cur_node = self.head
+            while cur_node.get_next_node() is not self.tail:
+                cur_node = cur_node.set_next_node()
+            cur_node.set_next_node(None)
+            self.tail = cur_node
+            
+        return ret_value
 
     def contains(self, value):
         cur_node = self.head
@@ -82,3 +87,4 @@ class LinkedList:
                 max_value = cur_node.get_value()
             cur_node = cur_node.get_next_node()
         return max_value
+
