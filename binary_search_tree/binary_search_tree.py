@@ -9,6 +9,30 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+class Stack:
+    def __init__(self):
+        self.array = []
+
+    def push(self, value):
+        self.array.append(value)
+    
+    def pop(self):
+        if len(self.array) > 0:
+            return self.array.pop()
+
+
+class Queue:
+    def __init__(self):
+        self.array = []
+
+    def enqueue(self, value):
+        self.array.insert(0, value)
+
+    def dequeue(self):
+        if len(self.array) > 0:
+            return self.array.pop()
+
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -31,7 +55,6 @@ class BSTNode:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        print("value of root", self.value)
         if self.value is target:
             return True
         elif self.value > target and self.left:
@@ -73,17 +96,42 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self.left:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right:
+            self.right.in_order_print()
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        queue = Queue()
+        queue.enqueue(self)
+
+        while len(queue.array) > 0:
+            cur_node = queue.dequeue()
+            print(cur_node.value)
+            if cur_node.left:
+                queue.enqueue(cur_node.left)
+            if cur_node.right:
+                queue.enqueue(cur_node.right)
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        stack = Stack()
+        stack.push(self)
+
+        while len(stack.array) > 0:
+            cur_node = stack.array.pop()
+            print(cur_node.value)
+            if cur_node.right:
+                stack.push(cur_node.right)
+            if cur_node.left:
+                stack.push(cur_node.left)
+
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -109,8 +157,9 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-# bst.bft_print()
-# bst.dft_print()
+bst.bft_print()
+bst.dft_print()
+bst.in_order_print()
 
 # print("elegant methods")
 # print("pre order")
